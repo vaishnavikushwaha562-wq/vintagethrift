@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In to your account — Darciee` & Co Atelier</title>
+  <meta name="description" content="Private patron authentication for Darciee` & Co. Access curated 1-of-1 archival drops, bespoke sourcing, and private salon releases." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              DEFAULT: '#FAF7F2',
+              alt: '#F3EFE7',
+              card: '#FFFFFF'
+            },
+            burgundy: {
+              DEFAULT: '#4A121A',
+              deep: '#2F080F',
+              light: '#6A1E29'
+            },
+            charcoal: '#181716',
+            noir: '#0D0C0B',
+            gold: {
+              DEFAULT: '#C5A880',
+              bright: '#D4AF37',
+              muted: '#8E7453'
+            }
+          },
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            editorial: ['Cormorant Garamond', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Darciee` & Co Custom Theme Stylesheet -->
+  <style>
+    :root {
+      --bg-cream: #FAF7F2;
+      --bg-cream-alt: #F3EFE7;
+      --bg-cream-card: #FFFFFF;
+      --color-burgundy: #4A121A;
+      --color-burgundy-deep: #2F080F;
+      --color-burgundy-light: #6A1E29;
+      --color-charcoal: #181716;
+      --color-noir: #0D0C0B;
+      --color-gold: #C5A880;
+      --color-gold-bright: #D4AF37;
+      --color-gold-muted: #8E7453;
+      --color-text-primary: #1A1817;
+      --color-text-secondary: #5C5753;
+      --color-text-muted: #8A847F;
+      --border-subtle: rgba(197, 168, 128, 0.25);
+      --font-serif-display: 'Cinzel', serif;
+      --font-serif-editorial: 'Cormorant Garamond', serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --transition-luxury: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-cream);
+      color: var(--color-text-primary);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Tactile Film Grain Overlay (Matches Main Site) */
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Ambient Warm Glow */
+    .ambient-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(197, 168, 128, 0.16) 0%, rgba(74, 18, 26, 0.05) 50%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Buttons matching main theme */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background-color: var(--color-burgundy);
+      color: #FAF7F2;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.95rem 1.8rem;
+      border: 1px solid var(--color-burgundy);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-luxury);
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-burgundy-deep);
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+
+    .btn-primary:hover::before {
+      transform: translateY(0);
+    }
+
+    .btn-primary span,
+    .btn-primary svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: transparent;
+      color: var(--color-charcoal);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.4rem;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition-luxury);
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-secondary:hover {
+      background-color: #FFFFFF;
+      border-color: var(--color-gold);
+      color: var(--color-burgundy);
+    }
+
+    /* Custom Checkbox */
+    .filter-checkbox {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--color-text-muted);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      vertical-align: middle;
+      background: #FFFFFF;
+    }
+
+    .filter-checkbox:checked {
+      background-color: var(--color-burgundy);
+      border-color: var(--color-burgundy);
+    }
+
+    .filter-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FAF7F2;
+      font-size: 11px;
+    }
+
+    /* Auth Tab Switches */
+    .auth-tab {
+      position: relative;
+      padding-bottom: 0.75rem;
+      font-family: var(--font-serif-display);
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .auth-tab.active {
+      color: var(--color-burgundy);
+      font-weight: 600;
+    }
+
+    .auth-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background-color: var(--color-burgundy);
+    }
+
+    /* Input Field Styling */
+    .auth-input {
+      width: 100%;
+      background: #FAF7F2;
+      border: 1px solid rgba(197, 168, 128, 0.35);
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: var(--color-text-primary);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .auth-input:focus {
+      background: #FFFFFF;
+      border-color: var(--color-burgundy);
+      box-shadow: 0 0 0 1px var(--color-burgundy);
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast-item {
+      pointer-events: auto;
+      background: var(--color-charcoal);
+      color: #FAF7F2;
+      border-left: 3px solid var(--color-gold-bright);
+      padding: 0.9rem 1.4rem;
+      border-radius: 2px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: slideToast 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slideToast {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body class="selection:bg-[#4A121A] selection:text-[#FAF7F2] flex flex-col justify-between">
+
+  <!-- Tactile Film Grain Overlay -->
+  <div class="film-grain"></div>
+  
+  <!-- Subtle Ambient Glow -->
+  <div class="ambient-glow"></div>
+
+  <!-- Announcement Ticker -->
+  <aside class="bg-[#181716] text-[#ECE5DD] text-[11px] tracking-[0.16em] uppercase py-2 px-4 border-b border-[#C5A880]/20 text-center relative z-10 flex items-center justify-between">
+    <div class="hidden sm:block text-[#C5A880]">PRIVATE ATELIER PORTAL</div>
+    <div class="mx-auto flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping"></span>
+      <span>Patron Access • Curated 1-of-1 Archival Vintage & Bespoke Sourcing</span>
+    </div>
+    <div class="hidden sm:block text-[#C5A880]">EST. 2024</div>
+  </aside>
+
+  <!-- Top Minimal Navigation -->
+  <header class="relative z-10 py-6 px-6 sm:px-12 flex items-center justify-between border-b border-[#C5A880]/15">
+    <a href="D&co1.html" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#5C5753] hover:text-[#4A121A] transition-colors group">
+      <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <span>Return to Atelier</span>
+    </a>
+
+    <!-- Center Brand Logo -->
+    <a href="D&co1.html#home" class="text-center group">
+      <span class="font-cinzel text-xl sm:text-2xl font-bold tracking-[0.18em] text-[#181716] group-hover:text-[#4A121A] transition-colors">
+        DARCIEE<span class="text-[#D4AF37]">`</span> & CO
+      </span>
+      <span class="block text-[8px] uppercase tracking-[0.34em] text-[#8E7453] font-medium -mt-1">
+        Curated Thrift & Archival Haute
+      </span>
+    </a>
+
+    <!-- Right Concierge Link -->
+    <a href="D&co1.html#contact" class="text-xs uppercase tracking-widest text-[#8E7453] hover:text-[#181716] transition-colors hidden sm:block">
+      Concierge Help
+    </a>
+  </header>
+
+  <!-- Main Authentication Container -->
+  <main class="relative z-10 flex-1 flex items-center justify-center p-4 sm:p-8 lg:p-12">
+    <div class="max-w-4xl w-full bg-white border border-[#C5A880]/30 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 rounded-sm">
+      
+      <!-- Left Column: Editorial Atmospheric Imagery & Ethos (Desktop Only) -->
+      <div class="hidden lg:flex lg:col-span-5 bg-[#181716] text-[#FAF7F2] relative flex-col justify-between p-10 overflow-hidden">
+        <!-- Background Editorial Image with Dark Luxury Gradient -->
+        <div class="absolute inset-0 z-0">
+          <img src="c:\\Users\\Lenovo\\OneDrive\\vintagestore\\Assets\\outerwear\\checkeredblack.jpg" 
+               alt="Archival Haute Couture" 
+               class="w-full h-full object-cover opacity-35 filter grayscale contrast-125 scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0D0C0B] via-[#181716]/80 to-transparent"></div>
+        </div>
+
+        <!-- Top Badge -->
+        <div class="relative z-10">
+          <span class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md text-[#D4AF37] text-[10px] uppercase tracking-widest font-semibold border border-[#C5A880]/30 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
+            Darciee` & Co 
+          </span>
+        </div>
+
+        <!-- Center Quote & Narrative -->
+        <div class="relative z-10 space-y-4 my-auto">
+          <p class="font-editorial text-2xl xl:text-3xl italic leading-snug text-[#FAF7F2]">
+            "Where archival soul meets modern code. Step into the sanctuary of one-of-a-kind curation."
+          </p>
+          <div class="w-12 h-0.5 bg-[#D4AF37]"></div>
+          <p class="text-xs text-[#A8A29E] leading-relaxed">
+            Reserved for our patrons. Enjoy priority reserve privileges on Friday releases, tailored 3D garment inspections, and private archival sourcing.
+          </p>
+        </div>
+
+        <!-- Bottom Founders Stamp -->
+        <div class="relative z-10 pt-6 border-t border-white/10 text-[10px] text-[#C5A880] tracking-wider uppercase flex justify-between items-center">
+          <span>Curated thrift store</span>
+          <span class="text-white font-serif">1-of-1 Vault</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Login / Register Form -->
+      <div class="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-between bg-white">
+        
+        <!-- Header & Tab Toggle -->
+        <div>
+          <div class="flex items-center justify-between border-b border-[#F3EFE7] mb-8">
+            <div class="flex gap-8">
+              <button id="tab-login" class="auth-tab active" onclick="switchAuthMode('login')">
+                Sign In To Your Account
+              </button>
+              <button id="tab-register" class="auth-tab" onclick="switchAuthMode('register')">
+                Request Premium Access
+              </button>
+            </div>
+            
+            <span class="text-[10px] text-[#8E7453] uppercase tracking-wider hidden sm:inline">
+              Secure Encrypted
+            </span>
+          </div>
+
+          <!-- Title & Subtitle -->
+          <div class="mb-6">
+            <h1 id="auth-heading" class="font-cinzel text-2xl sm:text-3xl text-[#181716] font-normal tracking-tight">
+              Welcome to the Atelier
+            </h1>
+            <p id="auth-subheading" class="text-xs text-[#5C5753] mt-1.5 leading-relaxed">
+              Enter your patron credentials to access reserved archival collections and private fitting dossiers.
+            </p>
+          </div>
+
+          <!-- Authentication Form -->
+          <form id="auth-form" class="space-y-4" onsubmit="handleAuthSubmit(event)">
+            
+            <!-- Full Name Field (Hidden on Sign In, Shown on Register) -->
+            <div id="field-fullname" >
+              <label for="input-name" class="block text-[11px] uppercase tracking-wider text-[#181716] font-semibold mb-1.5">
+                Full Name
+              </label>
+              <input id="input-name" type="text" placeholder="e.g. Lady Vivienne Vance" class="auth-input" />
+            </div>
+
+            <!-- Email Address Field -->
+            <div>
+              <label for="input-email" class="block text-[11px] uppercase tracking-wider text-[#181716] font-semibold mb-1.5">
+                 Email Address
+              </label>
+              <input id="input-email" type="email" required placeholder="patron@darciee-atelier.com" class="auth-input" />
+            </div>
+
+            <!-- Password Field with Show/Hide Toggle -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="input-password" class="block text-[11px] uppercase tracking-wider text-[#181716] font-semibold">
+                  Private Key / Password
+                </label>
+                <a href="#forgot" id="link-forgot" class="text-[10px] uppercase tracking-wider text-[#8E7453] hover:text-[#4A121A] transition-colors" onclick="handleForgotPassword(event)">
+                  Forgotten Key?
+                </a>
+              </div>
+              <div class="relative">
+                <input id="input-password" type="password" required placeholder="••••••••••••" class="auth-input pr-10" />
+                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#8A847F] hover:text-[#181716] p-1" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
+                  <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Remember Me & Terms Checkbox -->
+            <div class="flex items-center justify-between pt-1">
+              <label class="flex items-center gap-2 cursor-pointer select-none">
+                <input id="checkbox-remember" type="checkbox" checked class="filter-checkbox" />
+                <span class="text-xs text-[#5C5753]">Remember session on this device</span>
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+              <button id="btn-submit" type="submit" class="btn-primary">
+                <span id="btn-submit-text">Unlock Portal</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+
+          </form>
+
+          <!-- Divider -->
+          <div class="relative my-6 text-center">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-[#C5A880]/20"></div>
+            </div>
+            <span class="relative bg-white px-3 text-[10px] uppercase tracking-widest text-[#8A847F]">
+              Or Quick Test Access
+            </span>
+          </div>
+
+          <!-- Instant Demo Fill / VIP Quick Access -->
+          <button type="button" onclick="fillDemoCredentials()" class="btn-secondary">
+            <svg class="w-4 h-4 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>One-Click Patron Demo Credentials</span>
+          </button>
+        </div>
+
+        <!-- Privacy & Craftsmanship Guarantee Footer -->
+        <div class="mt-8 pt-6 border-t border-[#F3EFE7] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#8A847F] gap-2">
+          <span>● Verified by AI & Hardware Provenance</span>
+          <span>100% Confidential Archival Vault</span>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="relative z-10 py-6 text-center text-xs text-[#8A847F] border-t border-[#C5A880]/20 bg-[#FAF7F2]">
+    <p>© 2026 Darciee` & Co . Founded by Vaishnavi Kushwaha, Palak Gupta, & Tithee Bhardwaj.</p>
+  </footer>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    let currentAuthMode = 'login'; // 'login' or 'register'
+
+    // Switch between Sign In and Registration tabs
+    function switchAuthMode(mode) {
+      currentAuthMode = mode;
+      const tabLogin = document.getElementById('tab-login');
+      const tabRegister = document.getElementById('tab-register');
+      const fullNameField = document.getElementById('field-fullname');
+      const authHeading = document.getElementById('auth-heading');
+      const authSubheading = document.getElementById('auth-subheading');
+      const submitText = document.getElementById('btn-submit-text');
+      const forgotLink = document.getElementById('link-forgot');
+
+      if (mode === 'login') {
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+        fullNameField.classList.add('hidden');
+        authHeading.textContent = 'Welcome to the Atelier';
+        authSubheading.textContent = 'Enter your valid credentials to access reserved archival collections and private fitting dossiers.';
+        submitText.textContent = 'Unlock Portal';
+        forgotLink.style.display = 'block';
+      } else {
+        tabRegister.classList.add('active');
+        tabLogin.classList.remove('active');
+        fullNameField.classList.remove('hidden');
+        authHeading.textContent = 'Unlock The premium ';
+        authSubheading.textContent = 'Apply for exclusive patron status to receive early notifications on premium latest releases.';
+        submitText.textContent = 'Submit Patron Application';
+        forgotLink.style.display = 'none';
+      }
+    }
+
+    // Toggle password visibility
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('input-password');
+      const eyeIcon = document.getElementById('eye-icon');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+        `;
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        `;
+      }
+    }
+
+    // Quick demo auto-fill for testing
+    function fillDemoCredentials() {
+      switchAuthMode('login');
+      document.getElementById('input-email').value = 'patron@darciee-atelier.com';
+      document.getElementById('input-password').value = 'Archival1994!';
+      showToast('Patron credentials auto-filled. Click Unlock to proceed.');
+    }
+
+    // Handle form submission
+    function handleAuthSubmit(event) {
+      event.preventDefault();
+      const email = document.getElementById('input-email').value;
+      const submitBtn = document.getElementById('btn-submit');
+      const originalText = submitBtn.innerHTML;
+
+      // Simulated loading state
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.75';
+      submitBtn.innerHTML = `
+        <span>Verifying Provenance...</span>
+        <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+      `;
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.innerHTML = originalText;
+
+        if (currentAuthMode === 'login') {
+          showToast(`Welcome back, Patron (${email}). Access granted.`);
+          setTimeout(() => {
+            // Redirect back to main atelier catalog
+            window.location.href = 'index.html#shop';
+          }, 1400);
+        } else {
+          showToast(`Patron request received for ${email}. Invitation dispatched via email.`);
+          switchAuthMode('login');
+        }
+      }, 1000);
+    }
+
+    // Forgot password flow
+    function handleForgotPassword(event) {
+      event.preventDefault();
+      const email = document.getElementById('input-email').value;
+      if (!email) {
+        showToast('Please enter your Archival Email address above first.');
+        document.getElementById('input-email').focus();
+        return;
+      }
+      showToast(`Key reset dispatched to ${email}. Check your inbox.`);
+    }
+
+    // Luxury Toast Notification System
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const item = document.createElement('div');
+      item.className = 'toast-item';
+      item.innerHTML = `
+        <span class="text-[#D4AF37]">✦</span>
+        <span>${message}</span>
+      `;
+      container.appendChild(item);
+
+      setTimeout(() => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(100%)';
+        item.style.transition = 'all 0.3s ease';
+        setTimeout(() => item.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
